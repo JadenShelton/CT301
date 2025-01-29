@@ -4,8 +4,8 @@ opts=-D_FORTIFY_SOURCE=2 -fno-diagnostics-show-option	\
 -Wctor-dtor-privacy -Wduplicated-cond -Wduplicated-branches		\
 -Wextra -Winit-self -Wlogical-op -Wno-unused-variable -Wno-unused-parameter  \
 -Wold-style-cast -Wpedantic -Wshadow -Wunused-const-variable=2	\
--Wzero-as-null-pointer-constant
-CXXFLAGS=-Wall -Werror -Wfatal-errors $(opts) -o
+-Wzero-as-null-pointer-constant -O2
+CXXFLAGS=-Wall -Werror -Wfatal-errors $(opts)
 
 assignment=HW1
 
