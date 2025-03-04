@@ -11,13 +11,23 @@ class Image {
 
         Image(std::string input);
 
-        int loadPPM(ifstream& file);
-
         int validPPM();
 
         void storePixels();
 
         int validComparison();
+
+        const std::vector<std::vector<Pixel>>& getPixels() const {
+            return imagePixels;
+        }
+
+        int getWidth() const {
+            return width;
+        }
+
+        int getHeight() const {
+            return height;
+        }
 
     private:
         std::string filename;
@@ -29,5 +39,7 @@ class Image {
         int maxColorValue;
 
         std::string checksumName;
+
+        int loadPPM(ifstream& file);
 
 };

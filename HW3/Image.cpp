@@ -73,29 +73,28 @@ int Image::validPPM() {
 
 void Image::storePixels() {
     imagePixels = std::vector<std::vector<Pixel>>(height, std::vector<Pixel>(width));
-    
+    ifstream ppmFile(filename);
+
+    loadPPM(ppmFile);
+
+    for(int row = 0; row < height; row++) {
+        for(int column = 0; column < width; column++) {
+            imagePixels[row][column] = Pixel(ppmFile);
+        }
+    }
 }
 
 int Image::validComparison() {
     ifstream ppmFile(filename);
     ifstream checksumFile(checksumName);
 
-    if (!ppmFile.is_open()) {
-        cerr << "Error: can't open ppm file" << endl;
-        return -1;
-    }
+    loadPPM(ppmFile);
 
     if (!checksumFile.is_open()) {
         cerr << "Error: can't open checksum file" << endl;
         return -1;
     }
-    
-    string magicNumber;
-    int width, height, maxColorValue;
-    ppmFile >> magicNumber;
-    ppmFile >> width;
-    ppmFile >> height;
-    ppmFile >> maxColorValue;
+
 
     for(int row = 0; row < height; row++) {
         int rowSum = 0;

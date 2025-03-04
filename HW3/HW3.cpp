@@ -10,5 +10,6 @@ int main(int argc, char* argv[])
 
     Image img(argv[1]);
     img.validPPM();
-    return img.validComparison();
+    img.storePixels();
+    
 }
