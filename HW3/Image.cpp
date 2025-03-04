@@ -1,12 +1,5 @@
 #include "Image.h"
-#include<string>
-#include<iostream>
-#include<fstream>
-
 using namespace std;
-
-std::string filename;
-std::string checksumName;
 
 Image::Image(std::string input, std::string checksum) {
     filename = input;
@@ -18,39 +11,42 @@ Image::Image(std::string input) {
     checksumName = nullptr;
 }
 
-
-int Image::validPPM() {
-    ifstream file(filename);
+int Image::loadPPM(ifstream& file) {
 
     if (!file.is_open()) {
-        cerr << "Error: can't open file" << std::endl;
+        cerr << "Error: can't open file" << endl;
         return -1;
     }
 
-    string magicNumber;
     file >> magicNumber;
 
-    if (magicNumber != "P6") {
-        cerr << "Error: Improper file header" << std::endl;
+    if (magicNumber != "P3") {
+        cerr << "Error: Improper file header" << endl;
         return -1;
     }
 
-    int width, height, maxColorValue;
-
     if (!(file >> width) || width <= 0) {
-        cerr << "Error: Improper file width" << std::endl;
+        cerr << "Error: Improper file width" << endl;
         return -1;
     }
     
     if (!(file >> height) || height <= 0) {
-        cerr << "Error: Improper file height" << std::endl;
+        cerr << "Error: Improper file height" << endl;
         return -1;
     }
 
     if (!(file >> maxColorValue) || maxColorValue <= 0 || maxColorValue > 255) {
-        cerr << "Error: Improper max color value" << std::endl;
+        cerr << "Error: Improper max color value" << endl;
         return -1;
     }
+
+    return 0;
+}
+
+int Image::validPPM() {
+    ifstream file(filename);
+
+    loadPPM(file);
 
     int expectedPixelValues = width * height * 3;
     int pixelValue;
@@ -58,14 +54,14 @@ int Image::validPPM() {
 
     while(file >> pixelValue) {
         if(pixelValue < 0 || pixelValue > 255) {
-            cerr << "Error: Invalid pixel value" << std::endl;
+            cerr << "Error: Invalid pixel value" << endl;
             return -1;
         }
         totalPixels++;
     }
 
     if(expectedPixelValues !=  totalPixels) {
-        cerr << "Error: Incorrect number of pixels" << std::endl;
+        cerr << "Error: Incorrect number of pixels" << endl;
         return -1;
     }
     
@@ -73,17 +69,24 @@ int Image::validPPM() {
     return 0;
 }
 
+
+
+void Image::storePixels() {
+    imagePixels = std::vector<std::vector<Pixel>>(height, std::vector<Pixel>(width));
+    
+}
+
 int Image::validComparison() {
     ifstream ppmFile(filename);
     ifstream checksumFile(checksumName);
 
     if (!ppmFile.is_open()) {
-        cerr << "Error: can't open ppm file" << std::endl;
+        cerr << "Error: can't open ppm file" << endl;
         return -1;
     }
 
     if (!checksumFile.is_open()) {
-        cerr << "Error: can't open checksum file" << std::endl;
+        cerr << "Error: can't open checksum file" << endl;
         return -1;
     }
     
@@ -105,12 +108,12 @@ int Image::validComparison() {
 
         int checksumValue;
         if (!(checksumFile >> checksumValue)) {
-            cerr << "Error: not enough checksums provided" << std::endl;
+            cerr << "Error: not enough checksums provided" << endl;
             return -1;
         }
 
         if(rowSum != checksumValue) {
-            cerr << "Error: row sum does not equal checksum on row: " << row + 2 << std::endl;
+            cerr << "Error: row sum does not equal checksum on row: " << row + 2 << endl;
             return -(row + 2);
         }
 
@@ -118,7 +121,7 @@ int Image::validComparison() {
 
     int extraChecksum;
     if(checksumFile >> extraChecksum) {
-        cerr << "Error: extra entries in checksum" << std::endl;
+        cerr << "Error: extra entries in checksum" << endl;
         return -1;
     }
 
