@@ -1,12 +1,12 @@
 NETID=jshel02
 #Used for naming your tar file
-ASN=HW2
+ASN=HW3
 #Used for naming the executable
-SOURCES=HW2.cpp Image.cpp
+SOURCES=HW3.cpp Image.cpp Pixel.cpp ChecksumGenerator.cpp
 #List any files you need to make for source files
-HEADERS=Image.h
+HEADERS=Image.h Pixel.h ChecksumGenerator.h
 #List any Header files
-OBJECTS=HW2.o Image.o
+OBJECTS=HW3.o Image.o Pixel.o ChecksumGenerator.o
 #List any Object files you need to create for your assignment
 TARNAME=$(NETID)_$(ASN).tar
 

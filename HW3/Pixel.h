@@ -1,12 +1,16 @@
+#ifndef PIXEL_H
+#define PIXEL_H
+
 #include <iostream>
 #include <fstream>
 using std::ifstream;
 
 class Pixel {
     public:
+        Pixel() : red(0), green(0), blue(0) {} //default
         Pixel(ifstream& file);
 
-        int pixelValue();
+        int getPixelValue();
 
         inline int Red() const {return red;}
         inline int Green() const {return green;}
@@ -17,3 +21,5 @@ class Pixel {
         int green;
         int blue;
 };
+
+#endif // PIXEL_H

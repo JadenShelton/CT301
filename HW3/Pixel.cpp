@@ -1,4 +1,4 @@
-#include <Pixel.h>
+#include "Pixel.h"
  
 Pixel::Pixel(ifstream& file) {
     file >> red;
@@ -6,6 +6,6 @@ Pixel::Pixel(ifstream& file) {
     file >> blue;
 }
 
-int Pixel::pixelValue() {
+int Pixel::getPixelValue() {
     return red + green + blue;
 }

@@ -1,3 +1,7 @@
+#ifndef IMAGE_H
+#define IMAGE_H
+
+
 #include "Pixel.h"
 
 #include<string>
@@ -43,3 +47,5 @@ class Image {
         int loadPPM(ifstream& file);
 
 };
+
+#endif //IMAGE_H

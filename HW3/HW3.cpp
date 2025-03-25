@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Image.h"
+#include "ChecksumGenerator.h"
 
 int main(int argc, char* argv[])
 {
@@ -9,7 +10,11 @@ int main(int argc, char* argv[])
     }
 
     Image img(argv[1]);
+
     img.validPPM();
     img.storePixels();
+
+    ChecksumGenerator generator(img, argv[2], argv[3]);
     
+    return generator.generateRowChecksums() || generator.generateColumnChecksums();
 }

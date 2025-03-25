@@ -8,7 +8,7 @@ Image::Image(std::string input, std::string checksum) {
 
 Image::Image(std::string input) {
     filename = input;
-    checksumName = nullptr;
+    checksumName = "";
 }
 
 int Image::loadPPM(ifstream& file) {
