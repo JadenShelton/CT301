@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     img.getNormPixels();
 
     PPMGenerator fileGen(argv[2], img);
-    fileGen.writePPM();
+    return fileGen.writePPM();
 
     //std::cout << "Max = " << img.getMaxPixelValue() << std::endl;
     //std::cout << "Min = " << img.getMinPixelValue() << std::endl;
