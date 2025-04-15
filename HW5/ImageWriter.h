@@ -1,10 +1,7 @@
 #ifndef IMAGE_WRITER_H
-#define IMAGE_RITER_H
+#define IMAGE_WRITER_H
 
 #include "Image.h"
-#include "PPMWriter.h"
-#include "PGMWriter.h"
-#include "PBMWriter.h"
 #include<string>
 
 class ImageWriter {

@@ -40,10 +40,13 @@ int Image::loadImage(ifstream& file) {
         cerr << "Error: Improper file height" << endl;
         return -1;
     }
-
-    if (!(file >> maxColorValue) || maxColorValue <= 0 || maxColorValue > 255) {
-        cerr << "Error: Improper max color value" << endl;
-        return -1;
+    if(type != BINARY) {
+        if (!(file >> maxColorValue) || maxColorValue <= 0 || maxColorValue > 255) {
+            cerr << "Error: Improper max color value" << endl;
+            return -1;
+        }
+    } else {
+        maxColorValue = 1;
     }
 
     return 0;
@@ -56,7 +59,7 @@ int Image::validImage() {
     }
     
     int expectedPixelValues = width * height;
-    if (type == COLOR) expectedPixelValues * 3;
+    if (type == COLOR) expectedPixelValues *= 3;
 
     int pixelValue;
     int totalPixels = 0;
@@ -68,7 +71,7 @@ int Image::validImage() {
         totalPixels++;
         
         if(type == BINARY) {
-            if(pixelValue != 0 || pixelValue != 1) {
+            if(pixelValue != 0 && pixelValue != 1) {
                 std::cerr << "Error: Invalid binary pixel value" << std::endl;
                 return -1;
             }
@@ -196,8 +199,10 @@ int Image::validComparison() {
 void Image::convertToGrayscale() {
     if(type == GRAYSCALE) return;
 
+    std::cout << "Converting to grayscale: type=" << type << ", w=" << width << ", h=" << height << std::endl;
+
     for(int row = 0; row < height; ++row){
-        for(int col = 0; col < width; ++row) {
+        for(int col = 0; col < width; ++col) {
             int r = imagePixels[row][col].Red();
             int g = imagePixels[row][col].Green();
             int b = imagePixels[row][col].Blue();
@@ -206,7 +211,7 @@ void Image::convertToGrayscale() {
         }
     }
 
-    type == GRAYSCALE;
+    type = GRAYSCALE;
 
 }
 
@@ -214,7 +219,7 @@ void Image::convertToBinary() {
     if(type == BINARY) return;
 
     for(int row = 0; row < height; ++row){
-        for(int col = 0; col < width; ++row) {
+        for(int col = 0; col < width; ++col) {
             int pixelVal;
             if(type == COLOR) {
                 int r = imagePixels[row][col].Red();
@@ -236,19 +241,19 @@ void Image::convertToBinary() {
             imagePixels[row][col] = Pixel(255 * pixelVal, 255 * pixelVal, 255 * pixelVal);
         }
     }
-    type == BINARY;
+    type = BINARY;
 }
 
 void Image::convertToColor() {
     if(type == COLOR) return;
 
     for(int row = 0; row < height; ++row){
-        for(int col = 0; col < width; ++row) {
+        for(int col = 0; col < width; ++col) {
             int intensity = std::round((imagePixels[row][col].Red() + imagePixels[row][col].Green() + imagePixels[row][col].Blue())/ 3.0);
             imagePixels[row][col] = Pixel(intensity, intensity, intensity);
         }
     }
-    type == COLOR;
+    type = COLOR;
 }
 
 

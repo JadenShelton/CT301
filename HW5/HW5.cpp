@@ -12,18 +12,42 @@ int main(int argc, char* argv[])
 
     Image img(argv[1]);
 
-    img.validImage();
+    std::cout << "Validating..." << std::endl;
+    if (img.validImage() != 0) {
+        return -1;
+    }
+
+    std::cout << "Storing pixels..." << std::endl;
     img.storePixels();
+
+    std::cout << "Normalizing..." << std::endl;
     img.normalizePixels();
 
     //conversion logic
+    std::cout << "Converting..." << std::endl;
+    std::string outFile = argv[2];
+    if (outFile.size() >= 4 && outFile.substr(outFile.size() - 4) == ".ppm") {
+        img.convertToColor();
+    }
+    else if (outFile.size() >= 4 && outFile.substr(outFile.size() - 4) == ".pgm") {
+        img.convertToGrayscale();
+    }
+    else if (outFile.size() >= 4 && outFile.substr(outFile.size() - 4) == ".pbm") {
+        img.convertToBinary();
+    }
+    else {
+        std::cerr << "Error: unknown output file format" << std::endl;
+        return -1;
+    }
 
-    std::unique_ptr<ImageWriter> writer(ImageWriter::createWriter(argv[2]));
+    std::cout << "Writing..." << std::endl;
+    
+    std::unique_ptr<ImageWriter> writer(ImageWriter::createWriter(outFile));
     if(!writer) {
         std::cerr << "Error: unknown output file format" << std::endl;
         return -1;
     }  
     
-    return writer->write(argv[2], img);
+    return writer->write(outFile, img);
 }
 

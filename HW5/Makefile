@@ -2,11 +2,11 @@ NETID=jshel02
 #Used for naming your tar file
 ASN=HW5
 #Used for naming the executable
-SOURCES=HW5.cpp Image.cpp Pixel.cpp PPMGenerator.cpp
+SOURCES=HW5.cpp Image.cpp Pixel.cpp ImageWriter.cpp PPMWriter.cpp PGMWriter.cpp PBMWriter.cpp
 #List any files you need to make for source files
-HEADERS=Image.h Pixel.h PPMGenerator.h
+HEADERS=Image.h Pixel.h ImageWriter.h PPMWriter.h PGMWriter.h PBMWriter.h
 #List any Header files
-OBJECTS=HW5.o Image.o Pixel.o PPMGenerator.o
+OBJECTS=HW5.o Image.o Pixel.o ImageWriter.o PPMWriter.o PGMWriter.o PBMWriter.o
 #List any Object files you need to create for your assignment
 TARNAME=$(NETID)_$(ASN).tar
 
